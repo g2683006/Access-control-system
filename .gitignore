@@ -1,0 +1,6 @@
+.idea/
+*.log
+RookieMeeting/target/
+meeting/node_modules/
+meeting/dist/
+
