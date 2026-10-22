@@ -4,3 +4,11 @@ RookieMeeting/target/
 meeting/node_modules/
 meeting/dist/
 
+# 本地配置（含数据库密码、百度密钥），模板见 application-example.yml
+RookieMeeting/src/main/resources/application.yml
+RookieMeeting/src/main/resources/application-*.yml
+!RookieMeeting/src/main/resources/application-example.yml
+
+# 前端本地环境变量（真实的百度地图 AK 写在这里）
+meeting/.env.local
+meeting/.env.*.local
