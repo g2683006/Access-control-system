@@ -5,8 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>icon.png">
-    <title>门禁管理系统</title>
-      <script type="text/javascript" src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=w1rrvjxnGGmo8IW9Fh4G7Fv3NGVTejCC"></script>
+    <title>会议管理系统</title>
+    <% if (VUE_APP_BAIDU_MAP_AK) { %>
+    <!-- 百度地图只用来把签到位置的经纬度换成地址，没配置 AK 时不加载 -->
+    <script type="text/javascript" src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=<%= VUE_APP_BAIDU_MAP_AK %>"></script>
+    <% } %>
   </head>
   <body>
     <noscript>

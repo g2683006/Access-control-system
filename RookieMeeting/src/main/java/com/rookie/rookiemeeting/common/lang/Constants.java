@@ -8,6 +8,8 @@ public interface Constants {
 
     String ROLE = "ROLE_NORMAL";
 
+    String ROLE_ADMIN = "ROLE_ADMIN";
+
     int STATUS = 0;
 
     String DICT_ICON = "icon";

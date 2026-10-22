@@ -2,6 +2,7 @@ package com.rookie.rookiemeeting.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rookie.rookiemeeting.common.lang.Result;
+import com.rookie.rookiemeeting.service.IMeetingService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,22 +12,22 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "通知控制类")
 public class NotificationsController {
 
-//    @Autowired
-//    IMeetingService meetingService;
-//
-//    @GetMapping("/sevenDayMeeting/{employeeid}")
-//    public Result sevenDayMeeting(@PathVariable(name = "employeeid") Long employeeid,
-//                                  @RequestParam Integer pageNum,
-//                                  @RequestParam Integer pageSize,
-//                                  @RequestParam(defaultValue = "") String meetingname) {
-//        return Result.succ(meetingService.getSevenDayMeeting(new Page<>(pageNum, pageSize), employeeid, meetingname));
-//    }
-//
-//    @GetMapping("/cancelMeeting/{employeeid}")
-//    public Result cancelMeeting(@PathVariable(name = "employeeid") Integer emplyeeid,
-//                                @RequestParam Integer pageNum,
-//                                @RequestParam Integer pageSize,
-//                                @RequestParam(defaultValue = "") String meetingname) {
-//        return Result.succ(meetingService.getCancelMeeting(new Page<>(pageNum, pageSize), emplyeeid, meetingname));
-//    }
+    @Autowired
+    IMeetingService meetingService;
+
+    @GetMapping("/sevenDayMeeting/{employeeid}")
+    public Result sevenDayMeeting(@PathVariable(name = "employeeid") Long employeeid,
+                                  @RequestParam Integer pageNum,
+                                  @RequestParam Integer pageSize,
+                                  @RequestParam(defaultValue = "") String meetingname) {
+        return Result.succ(meetingService.getSevenDayMeeting(new Page<>(pageNum, pageSize), employeeid, meetingname));
+    }
+
+    @GetMapping("/cancelMeeting/{employeeid}")
+    public Result cancelMeeting(@PathVariable(name = "employeeid") Long employeeid,
+                                @RequestParam Integer pageNum,
+                                @RequestParam Integer pageSize,
+                                @RequestParam(defaultValue = "") String meetingname) {
+        return Result.succ(meetingService.getCancelMeeting(new Page<>(pageNum, pageSize), employeeid, meetingname));
+    }
 }

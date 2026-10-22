@@ -19,14 +19,12 @@ public class MyApplicationRunner implements ApplicationRunner {
     @Autowired
     RedisTemplate redisTemplate;
 
-    @Autowired
-    MybatisRedisCache mybatisRedisCache;
-
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Set keys = redisTemplate.keys("*");
-        mybatisRedisCache.removeObject(keys);
+        //只删本系统的键（MyBatis 二级缓存和登录 token），不要把同一个 Redis 库里别的程序的数据也清掉
+        Set keys = redisTemplate.keys("*com.rookie.rookiemeeting.mapper*");
+        keys.addAll(redisTemplate.keys("JWT_*"));
         redisTemplate.delete(keys);
-        log.info("清理redis缓存");
+        log.info("清理redis缓存 {} 个键", keys.size());
     }
 }

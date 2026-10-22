@@ -20,6 +20,7 @@ export default new Vuex.Store({
       localStorage.removeItem("menus")
       localStorage.removeItem("token")
       localStorage.removeItem("location")
+      localStorage.removeItem("currentPathName")
       router.push("/login")
       //重置路由
       resetRouter()

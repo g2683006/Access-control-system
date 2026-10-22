@@ -3,3 +3,37 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+html, body, #app {
+    height: 100%;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    color: #303133;
+    background: #f0f2f5;
+}
+
+/* 列表页通用样式 */
+.page-card {
+    background: #fff;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+.toolbar {
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.toolbar .el-input {
+    width: 180px;
+}
+
+.pager {
+    margin-top: 12px;
+    text-align: right;
+}

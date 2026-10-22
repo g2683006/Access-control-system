@@ -1,6 +1,15 @@
 .idea/
 *.log
 RookieMeeting/target/
-meeting/node_modules/
+meeting/node_modules
 meeting/dist/
 
+# 本机配置（含数据库密码、百度密钥），模板见 application-local.example.yml
+RookieMeeting/src/main/resources/application-local.yml
+
+# 运行时保存的人脸照片
+RookieMeeting/data/
+
+# 前端本地环境变量（真实的百度地图 AK 写在这里）
+meeting/.env.local
+meeting/.env.*.local

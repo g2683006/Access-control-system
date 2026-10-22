@@ -1,0 +1,17 @@
+# 本机配置模板：复制成同目录的 application-local.yml 再填写，只写需要覆盖的项就行。
+# application-local.yml 已被 .gitignore 忽略，里面的数据库密码和百度密钥不会被提交。
+
+spring:
+  datasource:
+    username: root
+    password: your-mysql-password
+  redis:
+    host: localhost
+    port: 6379
+    # password: your-redis-password
+
+baidu:
+  enabled: true
+  appId: your-app-id
+  key: your-api-key
+  secret: your-secret-key

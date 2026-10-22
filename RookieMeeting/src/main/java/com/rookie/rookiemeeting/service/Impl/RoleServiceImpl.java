@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -44,7 +46,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 
         // 再把前端传过来的菜单id数组绑定到当前的这个角色id上去
         List<Integer> menuIdsCopy = CollUtil.newArrayList(menuIds);
+        //父菜单可能已经在前面被自动补过了，用这个集合避免重复插入（role_id + menu_id 是主键）
+        Set<Integer> inserted = new HashSet<>();
         for (Integer menuId : menuIds) {
+            if (!inserted.add(menuId)) {
+                continue;
+            }
             Menu menu = menuService.getById(menuId);
             if (menu.getPid() != null && !menuIdsCopy.contains(menu.getPid())) { // 二级菜单 并且传过来的menuId数组里面没有它的父级id
                 // 那么我们就得补上这个父级id
@@ -53,6 +60,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
                 roleMenu.setMenuId(menu.getPid());
                 roleMenuMapper.insert(roleMenu);
                 menuIdsCopy.add(menu.getPid());
+                inserted.add(menu.getPid());
             }
             RoleMenu roleMenu = new RoleMenu();
             roleMenu.setRoleId(roleId);

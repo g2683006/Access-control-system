@@ -1,6 +1,8 @@
 package com.rookie.rookiemeeting.controller;
 
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rookie.rookiemeeting.common.lang.Result;
@@ -51,6 +53,9 @@ public class MessageController {
     @ApiOperation("新增和编辑部门接口")
     @PostMapping("/save")
     public Result save(@RequestBody Message message) {
+        if (StrUtil.isBlank(message.getAddtime())) {
+            message.setAddtime(DateUtil.now());
+        }
         return Result.succ(messageService.saveOrUpdate(message));
     }
 

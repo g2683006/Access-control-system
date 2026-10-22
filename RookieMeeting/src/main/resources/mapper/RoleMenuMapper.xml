@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rookie.rookiemeeting.mapper.RoleMenuMapper">
+    <!--和接口上 @CacheNamespace 用同一个 Redis 缓存。不加的话这里的 update/delete 不会清缓存，
+        比如改完密码后登录查到的还是旧密码-->
+    <cache-ref namespace="com.rookie.rookiemeeting.mapper.RoleMenuMapper"/>
 
     <delete id="deleteByRoleId">
         delete
