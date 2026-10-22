@@ -62,4 +62,13 @@ public class MeetingDto implements Serializable {
 
     private Integer status;
 
+    //会议室位置
+    private String location;
+
+    //当前员工在这个会议里的签到状态（0未签到，1已签到），只在"我的会议"里有值
+    private Integer signstatus;
+
+    //当前员工的签到时间，只在"我的会议"里有值
+    private Date checkintime;
+
 }

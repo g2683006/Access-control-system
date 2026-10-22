@@ -47,7 +47,7 @@ export const setRoutes = () => {
     const storeMenus = localStorage.getItem("menus")
     if (storeMenus) {
         const currentRouteNames = router.getRoutes().map(v => v.name)
-        if (!currentRouteNames.includes('Manger')) {
+        if (!currentRouteNames.includes('layout')) {
             const managerRote = {
                 path: '/',
                 name: 'layout',
@@ -95,11 +95,10 @@ router.beforeEach((to, from, next) => {
     if (!to.matched.length) {
         const storeMenus = localStorage.getItem("menus")
         if (storeMenus) {
-            next("/404")
-        } else {
-            //跳回登录页面
-            next("/login")
+            return next("/404")
         }
+        //跳回登录页面
+        return next("/login")
     }
     next() //放行路由
 })

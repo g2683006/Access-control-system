@@ -8,13 +8,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BaiduConfig {
 
-    @Value("${baidu.appId}")
+    //没配置百度人脸识别时为空，PhotoController 会走演示模式，不会真的调用百度接口
+    @Value("${baidu.appId:}")
     private String appId;
 
-    @Value("${baidu.key}")
+    @Value("${baidu.key:}")
     private String key;
 
-    @Value("${baidu.secret}")
+    @Value("${baidu.secret:}")
     private String secret;
 
     @Bean

@@ -78,6 +78,8 @@ public class EmployeeController {
         redisTemplate.opsForValue().set("JWT_" + jwt, JSON.toJSON(employee), 2, TimeUnit.HOURS);
         loginDto.setToken(jwt);
         loginDto.setMenus(menuService.getRoleMenu(employee.getRole()));
+        //不把密码的哈希值返回给前端
+        loginDto.setPassword(null);
 
         return Result.succ(loginDto);
     }
@@ -141,7 +143,18 @@ public class EmployeeController {
     @ApiOperation("个人信息修改和保存接口")
     @PostMapping("/personalSave")
     public Result personalSave(@RequestBody Employee employee) {
-        return Result.succ(employeeService.saveOrUpdate(employee));
+        //只能改自己的基本信息，账号、密码、角色、审批状态不能从这里改，否则普通用户可以把自己改成管理员
+        Employee current = TokenUtils.getCurrentUser();
+        if (current == null) {
+            return Result.fail(Constants.CODE_401, "请先登录");
+        }
+        Employee update = new Employee();
+        update.setEmployeeid(current.getEmployeeid());
+        update.setEmployeename(employee.getEmployeename());
+        update.setPhone(employee.getPhone());
+        update.setEmail(employee.getEmail());
+        update.setDepartmentid(employee.getDepartmentid());
+        return Result.succ(employeeService.updateById(update));
     }
 
     /**

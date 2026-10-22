@@ -3,11 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rookie.rookiemeeting.mapper.EmployeeMapper">
+    <!--和接口上 @CacheNamespace 用同一个 Redis 缓存。不加的话这里的 update/delete 不会清缓存，
+        比如改完密码后登录查到的还是旧密码-->
+    <cache-ref namespace="com.rookie.rookiemeeting.mapper.EmployeeMapper"/>
 
 
     <insert id="register">
-        insert into employee (username, password, status, role, employeename, departmentid)
-        values (#{username}, #{password}, #{status}, #{role}, #{employeename}, #{departmentid})
+        insert into employee (username, password, status, role, employeename, departmentid, phone, email)
+        values (#{username}, #{password}, #{status}, #{role}, #{employeename}, #{departmentid}, #{phone}, #{email})
     </insert>
 
 
@@ -36,7 +39,8 @@
         where username = #{username}
     </select>
 
-    <select id="findEmployee" resultType="com.rookie.rookiemeeting.entity.Employee">
+    <!--联查了部门表，部门改名不会清员工缓存，所以不走缓存-->
+    <select id="findEmployee" resultType="com.rookie.rookiemeeting.entity.Employee" useCache="false">
         select e.*,d.*
         from employee as e,department as d
         where e.departmentid = d.departmentid
@@ -59,10 +63,12 @@
         select *
         from employee
         where status = 0
+          and is_delete = 0
     </select>
 
     <!--根据ID查询门禁人员-->
-    <select id="getAllEmpsById" resultType="com.rookie.rookiemeeting.dto.ParticipantsDto">
+    <!--签到会改 meetingparticipants 表，这条查询不能走 EmployeeMapper 的二级缓存，否则签到后看到的还是旧状态-->
+    <select id="getAllEmpsById" resultType="com.rookie.rookiemeeting.dto.ParticipantsDto" useCache="false">
         SELECT e.employeeid,
                e.employeename,
                e.email,
@@ -103,6 +109,7 @@
         FROM employee as e,
              department as d
         WHERE e.departmentid = d.departmentid
+          AND e.is_delete = 0
     </select>
 
 
